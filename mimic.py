@@ -1,6 +1,8 @@
 import numpy as np
 import pandas as pd
 from time import time
+
+
 class mimic(object):
 
     def __init__(self, score_target_df, number_positive_within_bin = 5):
@@ -12,7 +14,6 @@ class mimic(object):
         assert(set(self.sorted_target) == set([0,1]))
         self.threshold_pos = number_positive_within_bin
 
-        
     def construct_initial_bin(self, sorted_score, sorted_target, threshold_pos):
 
         # 1st step: make each bin having 5 positive.
@@ -55,7 +56,6 @@ class mimic(object):
         print("Test Pos: {x}".format(x = test_pos))
         return bin_info
 
-
     def merge_bins(self, binning_input, increasing_flag):
         # binning_input
         # [[bl_index, score_min, score_max, score_mean, nPos_temp, total_temp, ctr_temp]]
@@ -92,8 +92,6 @@ class mimic(object):
                 result += [next_bin]
             
         return result, increasing_flag
-
-
 
     def run_merge_function(self, current_binning, record_history = False):
         # from copy import deepcopy
@@ -139,7 +137,6 @@ class mimic(object):
         return final_binning
 
     
-
 if __name__ == '__main__':
 
     # testing example
