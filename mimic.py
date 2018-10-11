@@ -134,7 +134,7 @@ class mimic(object):
         print("Number of bins at Initial step: {x}".format(x = len(initial_binning)))
 
         t0 = time()
-        final_binning = self.run_merge_function(initial_binning, record_history = True)
+        final_binning = self.run_merge_function(initial_binning, record_history = False)
         print("Merge binning time: {x} s".format(x =(time() - t0)))
         latest_bin_temp = final_binning[-1]
         print("Number of bins in the end: {x}".format(x = len(latest_bin_temp)))
