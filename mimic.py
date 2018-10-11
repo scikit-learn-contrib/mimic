@@ -122,19 +122,31 @@ class mimic(object):
             return history_binning
 
         return [new_bin_temp]
-            
+
+
+    def to_dataFrame(self,binning_input, detail= False):
+        # [[bl_index, score_min, score_max, score_mean, nPos_temp, total_temp, ctr_temp]]
+        df = pd.DataFrame(data = binning_input, columns= ["bin_index", "raw_score_l", "raw_score_r", "score_mean", "nPos", "bin_size", "predict_ctr"])
+        if (detail):
+            return df
+        return df[["raw_score_l", "predict_ctr"]]
+    
     def calibrate(self):
         t0 = time()
         initial_binning = self.construct_initial_bin(self.sorted_score,
                                                      self.sorted_target,
                                                      self.threshold_pos)
         print("Initialize binning time: {x} s".format(x =(time() - t0)))
+        print("Number of bins at Initial step: {x}".format(x = len(initial_binning)))
 
         t0 = time()
-        final_binning = self.run_merge_function(initial_binning, record_history = False)
+        final_binning = self.run_merge_function(initial_binning, record_history = True)
         print("Merge binning time: {x} s".format(x =(time() - t0)))
+        latest_bin_temp = final_binning[-1]
+        print("Number of bins in the end: {x}".format(x = len(latest_bin_temp)))
+        df = self.to_dataFrame(latest_bin_temp, detail= False)
         
-        return final_binning
+        return df
 
     
 if __name__ == '__main__':
@@ -152,4 +164,6 @@ if __name__ == '__main__':
     score_target_df = pd.DataFrame(data = zip(score, target), columns =["score", "target"])
 
     # mimic function
-    res = mimic(score_target_df).calibrate()
+    df = mimic(score_target_df).calibrate()
+
+    print(df)
