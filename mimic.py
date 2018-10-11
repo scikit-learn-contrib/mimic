@@ -94,21 +94,16 @@ class mimic(object):
         return result, increasing_flag
 
     def run_merge_function(self, current_binning, record_history = False):
-        # from copy import deepcopy
-        # initial_binning
+        # current_binning
         # [[bl_index, score_min, score_max, score_mean, nPos_temp, total_temp, ctr_temp]]
-        # current_binning = deepcopy(initial_binning)
+
         history_binning = []
-        
         if (record_history):
             history_binning += [current_binning]
 
         keep_merge = True
-        
         while(keep_merge):
-            
             new_bin_temp, increasing_flag = self.merge_bins(current_binning, True)
-            
             if (record_history):
                 history_binning += [new_bin_temp]
 
@@ -116,7 +111,6 @@ class mimic(object):
             current_binning = new_bin_temp
             # if it increasing monotonically, we stop merge
             keep_merge = not increasing_flag
-
 
         if (record_history):
             return history_binning
