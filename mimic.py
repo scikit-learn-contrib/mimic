@@ -234,6 +234,10 @@ if __name__ == '__main__':
     score_target_df = pd.DataFrame(data = zip(score, target), columns =["score", "target"])
 
     # mimic function
+    
     mimic_model = mimic(score_target_df)
     mimic_model.calibrate()
-    mimic_model.predict(0.2)
+    raw_score = 0.2
+    calibrated_score = mimic_model.predict(raw_score)
+    print(calibrated_score)
+
