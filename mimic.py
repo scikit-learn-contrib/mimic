@@ -1,7 +1,7 @@
 import numpy as np
 import pandas as pd
 from time import time
-
+import sys
 
 class mimic(object):
 
@@ -13,6 +13,8 @@ class mimic(object):
         self.sorted_target = self.df['target'].values
         assert(set(self.sorted_target) == set([0,1]))
         self.threshold_pos = number_positive_within_bin
+        self.calibrated_model = None
+        self.boundary_table = []
 
     def construct_initial_bin(self, sorted_score, sorted_target, threshold_pos):
 
@@ -36,13 +38,13 @@ class mimic(object):
         bl_index = 0
         bin_info = []
         test_pos = 0
+        
         for br_index in bin_right_index_array:
             # score stats
             score_temp = sorted_score[bl_index: br_index+ 1]
             score_min = min(score_temp)
             score_max = max(score_temp)
             score_mean = np.mean(score_temp)
-
             # target
             target_temp = sorted_target[bl_index: br_index+ 1]
             nPos_temp = np.sum(target_temp)
@@ -124,6 +126,36 @@ class mimic(object):
         if (detail):
             return df
         return df[["raw_score_l", "predict_ctr"]]
+
+    def get_bin_boundary(self, current_binning, boundary_choice = 2):
+        """
+        current_binning:
+
+        [[bl_index, score_min, score_max, score_mean, nPos_temp, total_temp, ctr_temp]]
+
+        boundary_choice:
+        0: choose socre_min, ie left boundary of bin
+        1: choose socre_max, ie right boundary of bin
+        2: choose socre_mean, ie mean score of bin
+
+        """
+        num_rows = len(current_binning)
+        
+        boundary_table_temp = []
+        
+        k = 2
+        
+        if (boundary_choice == 0):
+            k = 1
+            
+        if (boundary_choice == 2):
+            k = 3
+            
+        for i in range(num_rows):
+            boundary_table_temp += [current_binning[i][k]]
+            
+        return boundary_table_temp
+
     
     def calibrate(self):
         t0 = time()
@@ -138,13 +170,57 @@ class mimic(object):
         print("Merge binning time: {x} s".format(x =(time() - t0)))
         latest_bin_temp = final_binning[-1]
         print("Number of bins in the end: {x}".format(x = len(latest_bin_temp)))
+        self.calibrated_model = latest_bin_temp
+        self.boundary_table = self.get_bin_boundary(latest_bin_temp, boundary_choice = 2)
         df = self.to_dataFrame(latest_bin_temp, detail= False)
-        
         return df
+
+
+    def predict(self, x, debug= False):
+        
+        """
+        x: a raw score, ie pre-calibrated score.
+
+        calibrated_model:
+        [[bl_index, score_min, score_max, score_mean, nPos_temp, total_temp, ctr_temp]]
+        """
+        
+        if((self.calibrated_model is None) & (debug is False)):
+            sys.exit("Please calibrate model first by calling calibrate function.")
+        else:
+            # linear interpolation
+            which_bin = np.digitize([x], self.boundary_table, right = True)[0]
+
+            if (which_bin == 0):
+                y = self.boundary_table[0]
+            elif (which_bin == len(self.boundary_table)):
+                y = self.boundary_table[-1]
+            else:
+                delta_y = self.calibrated_model[which_bin][6] - self.calibrated_model[which_bin-1][6]
+                delta_x = self.boundary_table[which_bin] - self.boundary_table[which_bin-1]
+
+                y = self.calibrated_model[which_bin-1][6] + \
+                    (1.0*delta_y/delta_x) * (x - self.boundary_table[which_bin-1])
+                
+            return y
+                
+
+def test_construct_initial_bin():
+    df = pd.read_csv("test-input-1.csv")
+    sorted_score = df.score.values
+    sorted_target = df.target.values
+    threshold_pos = 5
+    bin_info = mimic(df).construct_initial_bin(sorted_score, sorted_target, threshold_pos)
+    test_df = pd.DataFrame(data = bin_info, columns = ["left_index", "score_min", "score_max", "score_mean", "target", "total", "ctr"])
+    benchmark_df = pd.read_csv("benchmark-1.csv")
+    ep = 1e-5
+    test_1 = abs((benchmark_df.ctr.sum() - test_df.ctr.sum())/benchmark_df.ctr.sum()) < ep
+    assert(test_1), "Test Fail."
 
     
 if __name__ == '__main__':
 
+    # test_construct_initial_bin()
     # testing example
     import random
     random.seed(10)
@@ -158,6 +234,6 @@ if __name__ == '__main__':
     score_target_df = pd.DataFrame(data = zip(score, target), columns =["score", "target"])
 
     # mimic function
-    df = mimic(score_target_df).calibrate()
-
-    print(df)
+    mimic_model = mimic(score_target_df)
+    mimic_model.calibrate()
+    mimic_model.predict(0.2)
