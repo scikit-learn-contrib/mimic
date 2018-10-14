@@ -191,10 +191,8 @@ class mimic(object):
             # linear interpolation
             which_bin = np.digitize([x], self.boundary_table, right = True)[0]
 
-            if (which_bin == 0):
-                y = self.boundary_table[0]
-            elif (which_bin == len(self.boundary_table)):
-                y = self.boundary_table[-1]
+            if ((which_bin == 0) or (which_bin == len(self.boundary_table)-1)):
+                y = self.calibrated_model[which_bin][6]
             else:
                 delta_y = self.calibrated_model[which_bin][6] - self.calibrated_model[which_bin-1][6]
                 delta_x = self.boundary_table[which_bin] - self.boundary_table[which_bin-1]
@@ -231,7 +229,7 @@ if __name__ == '__main__':
     threshold = 0.90
     target = [1 if random.random() >= threshold else 0 for i in range(num_rows)]
     print("Number of positive: {x}".format(x = sum(target)))
-    score_target_df = pd.DataFrame(data = zip(score, target), columns =["score", "target"])
+    score_target_df = pd.DataFrame(data = list(zip(score, target)), columns =["score", "target"])
 
     # mimic function
     
