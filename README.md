@@ -4,7 +4,7 @@ This method was mentioned at [NYC ML Meetup talk given by Sam Steingold](https:/
 
 ## Introduction:
 
-### implementation:
+### Implementation:
 It requires two inputs, the probability prediction from binary classification model and the binary target (0 and 1).                                                                                                  
  Here is how it is implemented.
 1. Sort the probabitliy in the ascending. Merge neighbor data points into one bin until the number of positive equal to threshold positive at each bin. In this initial binning, only the last bin may have number of positive less than threshold positive.
@@ -16,7 +16,7 @@ we record those informations in two places. One is `boundary_table`. The other i
 `calibrated_model`: it records all the information of bin, such nPos rate, the avg/min/max probability.                      
 The final step is linear interpolation on the prediction. Given probability prediction from binary classification model, we find out which bin it belongs to. Then, we perform linear interpolation in the corresponding bin.
 
-### parameters:
+### Parameters:
 ```python
 _MimicCalibration(threshold_pos, record_history)
 ```
@@ -35,8 +35,8 @@ y_mimic_calib_score = mimicObject.predict(y_calib_score)
 ```
 
 ## Results:
-### Simple example of probabilty vs mimic-calibrated-probability
+### mimic-calibrated-probability
 ![Image of mimic calibrated prob](https://github.com/pinjutien/mimic/blob/master/data/mimic_calib_prob.png)
 
-### Merege history of binning.
+### History of merging bins.
 ![Image of binning history](https://github.com/pinjutien/mimic/blob/master/data/merging_bins_history.png)
