@@ -18,10 +18,10 @@ The final step is linear interpolation on the prediction. Given probability pred
 
 ### parameters:
 ```python
-_MimicCalibration(threshold_pos, boundary_choice, record_history)
+_MimicCalibration(threshold_pos, record_history)
 ```
-threshold_pos: the number of positive in the initial binning.
-record_history: boolean parameter, decide if record all the mergeing of bin history. 
+* threshold_pos: the number of positive in the initial binning. default = 5.
+* record_history: boolean parameter, decide if record all the mergeing of bin history. default = False.
 
 ## How to use it
 
