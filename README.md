@@ -11,10 +11,10 @@ It requires two inputs, the probability prediction from binary classification mo
 2. Calculate the number of positive rate at each bin. Merge neighbor two bins if nPos rate in the left bin is greater than right bin.                                                                                                 
 3. Keep step 2. until the nPos rate in the increasing order.                                                                  
 4. In this step, we have information at each bin, such as nPos rate, the avg/min/max probability.                             
-we record those informations in two places. One is boundary_table. The other is calibrated_model.                          
-boundary_table: it records probability at each bin. The default is recording the avg prob of bin.                          
-calibrated_model: it records all the information of bin, such nPos rate, the avg/min/max probability.                      
-So, boundary_table is part of calibrated_model. The final step is linear interpolation on the prediction.                     Given probability prediction from binary classification model, we find out which bin it belongs to. Then, we perform linear interpolation in the corresponding bin.
+we record those informations in two places. One is `boundary_table`. The other is `calibrated_model`.                          
+`boundary_table`: it records probability at each bin. The default is recording the avg prob of bin.                          
+`calibrated_model`: it records all the information of bin, such nPos rate, the avg/min/max probability.                      
+The final step is linear interpolation on the prediction. Given probability prediction from binary classification model, we find out which bin it belongs to. Then, we perform linear interpolation in the corresponding bin.
 
 ### parameters:
 ```python
@@ -36,5 +36,7 @@ y_mimic_calib_score = mimicObject.predict(y_calib_score)
 
 ## Results:
 ### Simple example of probabilty vs mimic-calibrated-probability
+![Image of mimic calibrated prob](https://github.com/pinjutien/mimic/blob/master/data/mimic_calib_prob.png)
 
 ### Merege history of binning.
+![Image of binning history](https://github.com/pinjutien/mimic/blob/master/data/merging_bins_history.png)
