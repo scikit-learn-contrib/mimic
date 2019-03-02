@@ -3,8 +3,8 @@
 # ref: NYC ML Meetup talk given by Sam Steingold. https://www.youtube.com/watch?v=Cg--SC76I1I
 
 import numpy as np
-from .base import BaseEstimator, RegressorMixin
-from .utils import indexable, column_or_1d
+from sklearn.base import BaseEstimator, RegressorMixin
+from sklearn.utils import indexable, column_or_1d
 import sys
 
 
@@ -42,9 +42,9 @@ class _MimicCalibration(BaseEstimator, RegressorMixin):
       https://www.youtube.com/watch?v=Cg--SC76I1I
       http://tech.magnetic.com/2015/06/click-prediction-with-vowpal-wabbit.html
     """
-    def __init__(self, threshold_pos=5, boundary_choice=2, record_history=False):
+    def __init__(self, threshold_pos=5, record_history=False):
         self.threshold_pos = threshold_pos
-        self.boundary_choice = boundary_choice
+        self.boundary_choice = 2 # boundary_choice
         self.record_history = record_history
         self.history_record_table = []
 
@@ -300,6 +300,7 @@ class _MimicCalibration(BaseEstimator, RegressorMixin):
         """ Visualize merging history.
         """
         import matplotlib.pyplot as plt
+        fig = plt.figure()
         data = None
         if (self.record_history):
             data = self.history_record_table
@@ -317,7 +318,8 @@ class _MimicCalibration(BaseEstimator, RegressorMixin):
             one_history = data[i]
             score_array, nPosRate_array = self.get_one_history(one_history)
             plt.plot(score_array, nPosRate_array, label=str(i))
-        plt.xlabel("pre calibrated prob")
-        plt.ylabel("mimic calibrated prob")
+        plt.xlabel("pre calibrated prob", fontsize=18)
+        plt.ylabel("mimic calibrated prob", fontsize=18)
         plt.legend()
+        fig.savefig('merging_bins_history.png')
         plt.show()
