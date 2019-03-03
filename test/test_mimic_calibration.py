@@ -1,7 +1,12 @@
+from __future__ import absolute_import
+from __future__ import division
+from __future__ import print_function
+import numpy as np
 from sklearn.datasets import make_classification
 from sklearn.naive_bayes import MultinomialNB
-from sklearn.mimic_calibration import _MimicCalibration
-import numpy as np
+import sys
+sys.path.append('../')
+from mimic.mimic_calibration import _MimicCalibration
 
 
 def test_mimic_example():
@@ -15,7 +20,7 @@ def test_mimic_example():
     clf = MultinomialNB().fit(X_train, y_train)
     y_prob = clf.predict_proba(X)
     y_pre_calib_prob = np.array([y[1] for y in y_prob])
-    mimic_obj = _MimicCalibration(threshold_pos=5, boundary_choice=2, record_history=False)
+    mimic_obj = _MimicCalibration(threshold_pos=5, record_history=False)
 
     # X: probability prediction from MultinomialNB
     # y: binary target, [0, 1]

@@ -1,6 +1,7 @@
 """Mimic Calibration of predicted probabilities."""
 # Author: Pin-Ju Tien <pinju.tien@gmail.com>
-# ref: NYC ML Meetup talk given by Sam Steingold. https://www.youtube.com/watch?v=Cg--SC76I1I
+# ref: NYC ML Meetup talk given by Sam Steingold.
+# https://www.youtube.com/watch?v=Cg--SC76I1I
 
 import numpy as np
 from sklearn.base import BaseEstimator, RegressorMixin
@@ -44,7 +45,7 @@ class _MimicCalibration(BaseEstimator, RegressorMixin):
     """
     def __init__(self, threshold_pos=5, record_history=False):
         self.threshold_pos = threshold_pos
-        self.boundary_choice = 2 # boundary_choice
+        self.boundary_choice = 2
         self.record_history = record_history
         self.history_record_table = []
 
@@ -77,8 +78,8 @@ class _MimicCalibration(BaseEstimator, RegressorMixin):
                               sorted_score,
                               sorted_target,
                               threshold_pos):
-        """make each bin having the number of positives equal to threshold_pos.
-        the default number of threshold_pos = 5.
+        """make each bin having the number of positives equal to
+        threshold_pos.the default = 5.
 
         Parameters
         ----------
