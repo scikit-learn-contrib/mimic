@@ -40,3 +40,8 @@ y_mimic_calib_score = mimicObject.predict(y_calib_score)
 
 ### History of merging bins.
 ![Image of binning history](https://github.com/pinjutien/mimic/blob/master/data/merging_bins_history.png)
+
+### Run test
+```python
+coverage run -m py.test test
+```
