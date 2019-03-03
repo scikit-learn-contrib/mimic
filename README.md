@@ -44,4 +44,5 @@ y_mimic_calib_score = mimicObject.predict(y_calib_score)
 ### Run test
 ```python
 coverage run -m py.test test
+coverage report
 ```
