@@ -1,0 +1,8 @@
+name: mimic-env
+dependencies:
+  - numpy
+  - scipy
+  - scikit-learn
+  - coverage
+  - matplotlib
+  - pytest
