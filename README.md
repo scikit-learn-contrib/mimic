@@ -35,7 +35,7 @@ y_mimic_calib_score = mimicObject.predict(y_calib_score)
 ```
 
 ## Results:
-### mimic-calibrated-probability
+### Comparison :mimic, isotonic and platt calibration.
 ![Image of mimic calibrated prob](https://github.com/pinjutien/mimic/blob/master/data/mimic_calib_prob.png)
 
 ### History of merging bins.
