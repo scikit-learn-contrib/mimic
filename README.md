@@ -26,7 +26,7 @@ _MimicCalibration(threshold_pos, record_history)
 ## How to use it
 
 ```python
-from mimic_calibration import _MimicCalibration
+from mimic import _MimicCalibration
 mimicObject = _MimicCalibration(threshold_pos=5, record_history=True)
 # y_calib_score: probability prediction from binary classification model
 # y_calib: the binary target, 0 or 1.
