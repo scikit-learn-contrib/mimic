@@ -4,9 +4,9 @@ from __future__ import print_function
 import numpy as np
 from sklearn.datasets import make_classification
 from sklearn.naive_bayes import MultinomialNB
-import sys
-sys.path.append('../')
-from mimic.mimic_calibration import _MimicCalibration
+# import sys
+# sys.path.append('../')
+from mimic import _MimicCalibration
 
 
 def test_mimic_example():
