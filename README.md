@@ -42,6 +42,7 @@ In our testing examples, mimic and isotonic have very similar brier score.
 But, as number of bins increase in calibration curve, mimic calibration has more smooth behavior.
 It is because the calibrated probability of mimic has more continuous prediction space compared to
 isotonic calibration which is step function.
+In the following plot, brier scores are 0.1028 (mimic) and 0.1027 (isotonic).
 ![Image of mimic calibrated prob](https://github.com/pinjutien/mimic/blob/master/data/evaluation_calib_1.png)
 ![Image of mimic calibrated prob](https://github.com/pinjutien/mimic/blob/master/data/evaluation_calib_2.png)
 
