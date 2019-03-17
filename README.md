@@ -43,8 +43,19 @@ But, as number of bins increase in calibration curve, mimic calibration has more
 It is because the calibrated probability of mimic has more continuous prediction space compared to
 isotonic calibration which is step function.
 In the following plot, brier scores are 0.1028 (mimic) and 0.1027 (isotonic).
+
+```python
+calibration_curve(y_test, y_output_score, n_bins=10)
+```
 ![Image of mimic calibrated prob](https://github.com/pinjutien/mimic/blob/master/data/evaluation_calib_1.png)
+```python
+calibration_curve(y_test, y_output_score, n_bins=20)
+```
 ![Image of mimic calibrated prob](https://github.com/pinjutien/mimic/blob/master/data/evaluation_calib_2.png)
+
+The above behavior is similar in the followings cases.
+1. base model = GaussianNB, LinearSVC
+2. positive rate in the data = 0.5, 0.2
 
 ### Comparison :mimic, isotonic and platt calibration.
 ![Image of mimic calibrated prob](https://github.com/pinjutien/mimic/blob/master/data/mimic_calib_prob.png)
