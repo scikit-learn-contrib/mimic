@@ -37,7 +37,7 @@ y_mimic_calib_score = mimicObject.predict(y_calib_score)
 ## Results:
 
 ### Evaluation :mimic, isotonic calibration.
-## Here we show calibration curve and brier score.
+#### calibration curve and brier score.
 In our testing examples, mimic and isotonic have very similar brier score.
 But, as number of bins increase in calibration curve, mimic calibration has more smooth behavior.
 It is because the calibrated probability of mimic has more continuous prediction space compared to
