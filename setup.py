@@ -12,7 +12,7 @@ with open(ver_file) as f:
     exec(f.read())
 
 DISTNAME = 'mimic'
-DESCRIPTION = 'mimic is a calibration method which can be used in binary classification.'
+DESCRIPTION = 'mimic is a calibration method in binary classification.'
 with codecs.open('README.rst', encoding='utf-8-sig') as f:
     LONG_DESCRIPTION = f.read()
 MAINTAINER = 'Pin-Ju Tien'
@@ -34,6 +34,4 @@ setup(name=DISTNAME,
       # zip_safe=False,  # the package can run out of an .egg file
       # classifiers=CLASSIFIERS,
       # packages=find_packages(),
-      install_requires=INSTALL_REQUIRES,
-      # extras_require=EXTRAS_REQUIRE
-)
+      install_requires=INSTALL_REQUIRES)
