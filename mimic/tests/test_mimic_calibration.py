@@ -29,4 +29,6 @@ def test_mimic_example():
     mimic_obj.fit(X, y)
     # y_calib_prob: the mimic-calibrated probaility
     y_calib_prob = mimic_obj.predict(X)
-    assert (y_calib_prob.shape[0] == X.shape[0]), "The length of calibrated prob must be the same as pre-calibrated prob."
+    assert (y_calib_prob.shape[0] == X.shape[0]), \
+        "The length of calibrated prob must be the same as \
+        pre-calibrated prob."
