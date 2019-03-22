@@ -65,6 +65,6 @@ The above behavior is similar in the followings cases.
 
 ### Run test
 ```python
-coverage run -m py.test test
+coverage run -m py.test tests
 coverage report
 ```
