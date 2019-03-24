@@ -1,5 +1,5 @@
 # mimic calibration
-It is a calibration on the probability prediction from binary classification model. 
+mimic calibration is a calibration method for binary classification model.
 This method was presented at [NYC ML Meetup talk given by Sam Steingold](https://www.youtube.com/watch?v=Cg--SC76I1I).
 
 ## Introduction:
@@ -23,7 +23,7 @@ _MimicCalibration(threshold_pos, record_history)
 * threshold_pos: the number of positive in the initial binning. default = 5.
 * record_history: boolean parameter, decide if record all the mergeing of bin history. default = False.
 
-## How to use it
+## Usage
 
 ```python
 from mimic import _MimicCalibration
