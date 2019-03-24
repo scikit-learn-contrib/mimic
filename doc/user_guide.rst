@@ -26,7 +26,7 @@ Here is how it is implemented.
 
 Estimator
 ---------
-:class:`_MimicCalibration` is the main class of mimic calibration.
+`_MimicCalibration` is the main class of mimic calibration.
 
     >>> from mimic import _MimicCalibration
 
