@@ -12,42 +12,16 @@ import sys
 class _MimicCalibration(BaseEstimator, RegressorMixin):
     """ mimic calibration:
     A method to calibrate probability of binary classification model.
-    It requires two inputs, the probability prediction of binary
-    classification model and the binary target (0 and 1).
-    Here is how it is implemented.
-    1. Sort the probabitliy in the ascending.
-       Merge neighbor data points into one bin until the number of positive
-       equal to threshold positive at each bin.
-       In this initial binning, only the last bin may have number of
-       positive less than threshold positive.
-    2. Calculate the number of positive rate at each bin. Merge neighbor
-       two bins if nPos rate in the left bin is greater than right bin.
-    3. Keep step 2. until the nPos rate in the increasing order.
-    4. In this step, we have information at each bin,
-       such as nPos rate, the avg/min/max probability.
-       we record those informations in two places.
-       a. boundary_table: it records probability at each bin.
-          The default is recording the avg prob of bin.
-       b. calibrated_model: it records all the information of bin,
-          such nPos rate, the avg/min/max probability.
-       So, boundary_table is part of calibrated_model.
-    5. The final step is linear interpolation on the prediction.
-
-    Parameters
-    ----------
-    threshold_pos: the number of positive at each bin at initial binning step.
-                   default = 5
-    boundary_choice: the choice to decide boundary of probability at each bin.
-      0: choose socre_min, ie left boundary of bin
-      1: choose socre_max, ie right boundary of bin
-      2: choose socre_mean, ie mean score of bin
-    record_history: boolean: to record the merging bin process.
-
-    Reference:
-      https://www.youtube.com/watch?v=Cg--SC76I1I
-      http://tech.magnetic.com/2015/06/click-prediction-with-vowpal-wabbit.html
     """
     def __init__(self, threshold_pos=5, record_history=False):
+        """
+        Parameters
+        ----------
+        threshold_pos: int
+            the number of positive at each bin at initial binning step.
+        record_history: bool
+            to record the merging bin process.
+        """
         self.threshold_pos = threshold_pos
         self.boundary_choice = 2
         self.record_history = record_history
@@ -55,14 +29,21 @@ class _MimicCalibration(BaseEstimator, RegressorMixin):
 
     def get_bin_boundary(self, current_binning, boundary_choice):
         """
-        current_binning:
+        Parameters
+        ----------
+        current_binning: array-like, shape (num_bins, 7)
         [[bl_index, score_min, score_max, score_mean,
           nPos_temp, total_temp, PosRate_temp]]
 
-        boundary_choice:
-        0: choose socre_min, ie left boundary of bin
-        1: choose socre_max, ie right boundary of bin
-        2: choose socre_mean, ie mean score of bin
+        boundary_choice: int
+            0: choose socre_min, ie left boundary of bin
+            1: choose socre_max, ie right boundary of bin
+            2: choose socre_mean, ie mean score of bin
+
+        Returns
+        ----------
+        boundary_table: array-like, shape (num_bins, 1)
+
         """
         num_rows = len(current_binning)
         boundary_table_temp = []
@@ -98,10 +79,10 @@ class _MimicCalibration(BaseEstimator, RegressorMixin):
         Returns
         ----------
         bin_info: 2-D array, shape (number of bins, 6).
-          [[bl_index, score_min, score_max, score_mean,
-            nPos_temp, total_temp, nPosRate_temp]]
-        total_number_pos: integer, number of positive.
-
+            [[bl_index, score_min, score_max, score_mean,
+              nPos_temp, total_temp, nPosRate_temp]]
+        total_number_pos: integer
+            number of positive.
         """
         bin_right_index_array = []
         last_index = len(sorted_target)-1
@@ -144,6 +125,20 @@ class _MimicCalibration(BaseEstimator, RegressorMixin):
         return bin_info, total_number_pos
 
     def merge_bins(self, binning_input, increasing_flag):
+        """
+        Parameters
+        ----------
+        binning_input: array-like, shape (number of bins, 7)
+            [[bl_index, score_min, score_max,
+              score_mean, nPos_temp, total_temp, PosRate_temp]]
+        increasing_flag: bool
+
+        Returns
+        ----------
+        result: array-like, shape (number of bins, 7)
+            It merge bins to make sure the positive at each bin increasing.
+        increasing_flag: bool
+        """
         # binning_input
         # [[bl_index, score_min, score_max,
         #   score_mean, nPos_temp, total_temp, PosRate_temp]]
@@ -178,6 +173,22 @@ class _MimicCalibration(BaseEstimator, RegressorMixin):
         return result, increasing_flag
 
     def run_merge_function(self, current_binning, record_history=False):
+        """ It keep merging bins together until
+        the psoitive rate at each bin increasing.
+
+        Parameters
+        ----------
+        current_binning: array-like, shape (number of bins, 7)
+            [[bl_index, score_min, score_max,
+              score_mean, nPos_temp, total_temp, PosRate_temp]]
+        record_history: bool
+
+        Returns
+        ----------
+        result: array-like, shape (number of bins, 7)
+            it return the final binning result.
+        """
+
         # current_binning
         # [[bl_index, score_min, score_max, score_mean,
         # nPos_temp, total_temp, PosRate_temp]]
@@ -204,22 +215,24 @@ class _MimicCalibration(BaseEstimator, RegressorMixin):
                            y_score,
                            y_target,
                            number_positive_within_bin=5):
-        """ Perform mimic calibration.
+        """Perform mimic calibration.
 
         Parameters
         ----------
-        y_score: 1-d array,
-                 the probability prediction from binary model.
-        y_target: 1-d array, the element of this array is 0 or 1.
-        number_positive_within_bin: number of positive in the initial binning.
+        y_score: array-like, shape (number of row, 1)
+            the probability prediction from binary model.
+        y_target: array-like, shape (number of row, 1)
+            the element of this array is 0 or 1.
+        number_positive_within_bin: int
+            number of positive in the initial binning.
 
         Returns
         -------
-        boundary_table: 1-D array,
-        a seris of boundary of each bin. size = number of bins
-        calibrated_model: 2-D array, shape (number of bins, 6).
-        the 2nd dim of 2-D is detail information of each bin.
-        [bl_index, score_min, score_max, score_mean, nPos, total_num, PosRate]
+        boundary_table: array-like, shape (number of bin, 1)
+            a seris of boundary of each bin.
+        calibrated_model: array-like, shape (number of bins, 7).
+            [bl_index, score_min, score_max, score_mean,
+             nPos, total_num, PosRate]
         """
         assert ((y_score.min() >= 0) & (y_score.max() <= 1.0)), \
             "y_score is a probability which is between 0 and 1."
@@ -252,9 +265,10 @@ class _MimicCalibration(BaseEstimator, RegressorMixin):
 
         Parameters
         ----------
-        X: 1-d array,
-        the probability from the binary model.
-        y: 1-d array, binary target, its element is 0 or 1.
+        X: array-like, shape (number of row, 1)
+            the probability from the binary model.
+        y: array-like, shape (number of row, 1)
+            binary target, its element is 0 or 1.
 
         Returns
         -------
@@ -312,12 +326,13 @@ class _MimicCalibration(BaseEstimator, RegressorMixin):
 
         Parameters
         ----------
-        pre_calib_prob: 1-d array,
-        the probability prediction from the binary model.
+        pre_calib_prob: array-like
+            the probability prediction from the binary model.
 
         Returns
         -------
-        calib_prob : 1-d array, the mimic-calibrated probability.
+        calib_prob : array-like
+            the mimic-calibrated probability.
         """
         pre_calib_prob = column_or_1d(pre_calib_prob)
         if(self.calibrated_model is None):
@@ -345,6 +360,10 @@ class _MimicCalibration(BaseEstimator, RegressorMixin):
 
     def plot_history_result(self, show_history_array=[]):
         """ Visualize merging history.
+        Parameters
+        ----------
+        show_history_array: array-like
+            it can specify corresponding merge snapshot for given history index.
         """
         import matplotlib.pyplot as plt
         fig = plt.figure()
