@@ -3,4 +3,6 @@ scikit-learn
 coverage
 pytest
 matplotlib
-pandas
+sphinx_gallery
+sphinx
+numpydoc
