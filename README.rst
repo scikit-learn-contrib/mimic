@@ -28,6 +28,7 @@ Here is how it is implemented
 Parameters:
 ---------------
 >>> _MimicCalibration(threshold_pos, record_history)
+
 * threshold_pos: the number of positive in the initial binning. default = 5.
 * record_history: boolean parameter, decide if record all the mergeing of bin history. default = False.
 
@@ -52,9 +53,11 @@ Results: calibration evaluation.
 
 
 >>> calibration_curve(y_test, y_output_score, n_bins=10)
+
 .. image: https://github.com/pinjutien/mimic/blob/master/data/evaluation_calib_1.png
 
 >>> calibration_curve(y_test, y_output_score, n_bins=20)
+
 .. image: https://github.com/pinjutien/mimic/blob/master/data/evaluation_calib_2.png
 
    
@@ -65,10 +68,12 @@ The above behavior is similar in the followings cases.
 Comparison :mimic, isotonic and platt calibration.
 ------------------------------------------------------------
 .. image: https://github.com/pinjutien/mimic/blob/master/data/mimic_calib_prob.png
+   :width: 40pt
    
 History of merging bins.
 ------------------------------------------------------------
 .. image: https://github.com/pinjutien/mimic/blob/master/data/merging_bins_history.png
+   :width: 40pt
    
 Run test
 ------------------------------------------------------------
