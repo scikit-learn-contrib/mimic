@@ -27,22 +27,19 @@ Here is how it is implemented
 
 Parameters:
 ---------------
-```python
-_MimicCalibration(threshold_pos, record_history)
-```
+>>> _MimicCalibration(threshold_pos, record_history)
 * threshold_pos: the number of positive in the initial binning. default = 5.
 * record_history: boolean parameter, decide if record all the mergeing of bin history. default = False.
 
 Usage
 ---------------
-```python
-from mimic import _MimicCalibration
-mimicObject = _MimicCalibration(threshold_pos=5, record_history=True)
-# y_calib_score: probability prediction from binary classification model
-# y_calib: the binary target, 0 or 1.
-mimicObject.fit(y_calib_score, y_calib)
-y_mimic_calib_score = mimicObject.predict(y_calib_score)
-```
+
+>>> from mimic import _MimicCalibration
+>>> mimicObject = _MimicCalibration(threshold_pos=5, record_history=True)
+>>> # y_calib_score: probability prediction from binary classification model
+>>> # y_calib: the binary target, 0 or 1.
+>>> mimicObject.fit(y_calib_score, y_calib)
+>>> y_mimic_calib_score = mimicObject.predict(y_calib_score)
 
 Results: calibration evaluation.
 ------------------------------------------------------------
@@ -53,14 +50,11 @@ Results: calibration evaluation.
   isotonic calibration which is step function.
   In the following plot, brier scores are 0.1028 (mimic) and 0.1027 (isotonic).
 
-```python
-calibration_curve(y_test, y_output_score, n_bins=10)
-```
+
+>>> calibration_curve(y_test, y_output_score, n_bins=10)
 .. image: https://github.com/pinjutien/mimic/blob/master/data/evaluation_calib_1.png
 
-```python
-calibration_curve(y_test, y_output_score, n_bins=20)
-```
+>>> calibration_curve(y_test, y_output_score, n_bins=20)
 .. image: https://github.com/pinjutien/mimic/blob/master/data/evaluation_calib_2.png
 
    
@@ -78,10 +72,8 @@ History of merging bins.
    
 Run test
 ------------------------------------------------------------
-```python
-coverage run -m py.test tests
-coverage report
-```
+>>> coverage run -m py.test tests
+>>> coverage report
 
 Reference
 ----------
