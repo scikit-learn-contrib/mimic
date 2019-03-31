@@ -1,12 +1,15 @@
 .. -*- mode: rst -*-
 
-|CircleCI|_ |ReadTheDocs|_
+|Codecov|_ |CircleCI|_ |ReadTheDocs|_
 
 .. |CircleCI| image:: https://circleci.com/gh/pinjutien/mimic.svg?style=shield&circle-token=:circle-token
 .. _CircleCI: https://circleci.com/gh/pinjutien/mimic/tree/master
 
 .. |ReadTheDocs| image:: https://readthedocs.org/projects/sklearn-mimic/badge/?version=latest
 .. _ReadTheDocs: https://sklearn-mimic.readthedocs.io/en/latest/?badge=latest
+
+.. |Codecov| image:: https://codecov.io/gh/pinjutien/mimic/branch/master/graph/badge.svg
+   _Codecov: https://codecov.io/gh/pinjutien/mimic
 
 mimic calibration
 ==================================================
