@@ -3,3 +3,4 @@ scikit-learn
 coverage
 pytest
 matplotlib
+pandas
