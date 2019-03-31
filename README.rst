@@ -1,9 +1,12 @@
 .. -*- mode: rst -*-
 
-|CircleCI|_
+|CircleCI|_ |ReadTheDocs|_
 
 .. |CircleCI| image:: https://circleci.com/gh/pinjutien/mimic.svg?style=shield&circle-token=:circle-token
 .. _CircleCI: https://circleci.com/gh/pinjutien/mimic/tree/master
+
+.. |ReadTheDocs| image:: https://sklearn-mimic.readthedocs.io/en/latest/badge/?version=latest
+.. _ReadTheDocs: https://sklearn-mimic.readthedocs.io/en/latest/?badge=latest
 
 mimic calibration
 ==================================================
