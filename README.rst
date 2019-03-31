@@ -20,9 +20,9 @@ Here is how it is implemented
    if nPos rate in the left bin is greater than right bin.
 3. Keep step 2. until the nPos rate in the increasing order.
 4. In this step, we have information at each bin, such as nPos rate, the avg/min/max probability.
-   we record those informations in two places. One is `boundary_table`. The other is `calibrated_model`.
-   `boundary_table`: it records probability at each bin. The default is recording the avg prob of bin.
-   `calibrated_model`: it records all the information of bin, such nPos rate, the avg/min/max probability.
+   we record those informations in two places. One is ``boundary_table``. The other is ``calibrated_model``.
+   ``boundary_table``: it records probability at each bin. The default is recording the avg prob of bin.
+   ``calibrated_model``: it records all the information of bin, such nPos rate, the avg/min/max probability.
 5. The final step is linear interpolation.
 
 Parameters:
