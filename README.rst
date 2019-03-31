@@ -1,4 +1,9 @@
-==================================================
+.. -*- mode: rst -*-
+ |CircleCI|_
+ 
+.. |CircleCI| image:: https://circleci.com/gh/pinjutien/mimic.svg?style=shield&circle-token=:circle-token
+.. _CircleCI: https://circleci.com/gh/pinjutien/mimic/tree/master
+
 mimic calibration
 ==================================================
 
