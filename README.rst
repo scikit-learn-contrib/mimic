@@ -8,7 +8,7 @@
 .. |ReadTheDocs| image:: https://readthedocs.org/projects/sklearn-mimic/badge/?version=latest
 .. _ReadTheDocs: https://sklearn-mimic.readthedocs.io/en/latest/?badge=latest
 
-.. |Codecov| image:: https://codecov.io/gh/pinjutien/mimic/master/graph/badge.svg
+.. |Codecov| image:: https://codecov.io/gh/pinjutien/mimic/branches/master/graph/badge.svg
 .. _Codecov: https://codecov.io/gh/pinjutien/mimic/
 
 mimic calibration
