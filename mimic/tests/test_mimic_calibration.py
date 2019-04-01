@@ -5,7 +5,7 @@ import numpy as np
 from sklearn.datasets import make_classification
 from sklearn.naive_bayes import MultinomialNB
 import sys
-# sys.path.append('../')
+sys.path.append('../')
 import unittest
 from mimic import _MimicCalibration
 
