@@ -1,6 +1,9 @@
 .. -*- mode: rst -*-
 
-|CircleCI|_ |ReadTheDocs|_ |Codecov|_
+|Travis|_ |CircleCI|_ |ReadTheDocs|_ |Codecov|_
+
+.. |Travis| image:: https://travis-ci.org/pinjutien/mimic.svg?branch=master
+.. _Travis: https://travis-ci.org/pinjutien/mimic
 
 .. |CircleCI| image:: https://circleci.com/gh/pinjutien/mimic.svg?style=shield&circle-token=:circle-token
 .. _CircleCI: https://circleci.com/gh/pinjutien/mimic/tree/master
@@ -89,8 +92,8 @@ History of merging bins.
    
 Run test
 ------------------------------------------------------------
->>> coverage run -m py.test tests
->>> coverage report
+>>> pytest -v --cov=mimic --pyargs mimic
+
 
 Reference
 ----------
