@@ -30,5 +30,4 @@ test_script:
   - pytest -v --cov=mimic --pyargs mimic
 
 after_test:
-  - cd %APPVEYOR_BUILD_FOLDER%
   - codecov
