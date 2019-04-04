@@ -1,9 +1,12 @@
 .. -*- mode: rst -*-
 
-|Travis|_ |CircleCI|_ |ReadTheDocs|_ |Codecov|_
+|Travis|_ |AppVeyor|_ |CircleCI|_ |ReadTheDocs|_ |Codecov|_
 
 .. |Travis| image:: https://travis-ci.org/pinjutien/mimic.svg?branch=master
 .. _Travis: https://travis-ci.org/pinjutien/mimic
+
+.. |AppVeyor| image:: https://ci.appveyor.com/api/projects/status/45a01ej5biprj1pn?svg=true
+.. _AppVeyor: https://ci.appveyor.com/project/pinjutien/mimic
 
 .. |CircleCI| image:: https://circleci.com/gh/pinjutien/mimic.svg?style=shield&circle-token=:circle-token
 .. _CircleCI: https://circleci.com/gh/pinjutien/mimic/tree/master
