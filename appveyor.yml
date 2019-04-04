@@ -27,11 +27,8 @@ install:
   - pip install .
 
 test_script:
-  - mkdir for_test
-  - cd for_test
   - pytest -v --cov=mimic --pyargs mimic
 
 after_test:
-  - cp .coverage %APPVEYOR_BUILD_FOLDER%
   - cd %APPVEYOR_BUILD_FOLDER%
   - codecov
