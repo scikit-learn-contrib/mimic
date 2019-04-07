@@ -36,3 +36,30 @@ def test_mimic_example():
         pre-calibrated prob."
 
 
+def test_mimic_history_plots():
+    import numpy as np
+    n_samples = 1000
+    X, y = make_classification(n_samples=3 * n_samples, n_features=6,random_state=42)
+    X -= X.min()
+
+    # Train data: train binary model.
+    X_train, y_train = X[:n_samples], y[:n_samples]
+    # calibrate data.
+    X_calib, y_calib = X[n_samples:2 * n_samples], y[n_samples:2 * n_samples]
+    # test data.
+    X_test, y_test = X[2 * n_samples:], y[2 * n_samples:]
+    clf = MultinomialNB().fit(X_train, y_train)
+
+    # y_calib_score: training in the calibration model.
+    y_calib_score = clf.predict_proba(X_calib)
+    y_calib_score = np.array([score[1] for score in y_calib_score])
+
+    # y_test_score: evaluation in the calibration model.
+    y_test_score = clf.predict_proba(X_test)
+    y_test_score = np.array([score[1] for score in y_test_score])
+    
+    mimicObject = _MimicCalibration(threshold_pos=5, record_history=True)
+    mimicObject.fit(y_calib_score, y_calib)
+    y_mimic_score = mimicObject.predict(y_test_score)
+    history = mimicObject.history_record_table
+    mimicObject.plot_history_result([0, 5, 19])
