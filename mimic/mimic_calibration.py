@@ -358,15 +358,20 @@ class _MimicCalibration(BaseEstimator, RegressorMixin):
             nP_array += [nP]
         return score_array, nP_array
 
-    def plot_history_result(self, show_history_array=[]):
-        """ Visualize merging history.
+    def output_history_result(self, show_history_array=[]):
+        """ Output merging history.
         Parameters
         ----------
         show_history_array: array-like
-            it can specify corresponding merge snapshot for given history index.
+            given history index.
+
+        Returns
+        -------
+        score-posRate-array : array-like
+            [[score_array, nPosRate_array, i]]
         """
-        import matplotlib.pyplot as plt
-        fig = plt.figure()
+        # import matplotlib.pyplot as plt
+        # fig = plt.figure()
         data = None
         if (self.record_history):
             data = self.history_record_table
@@ -382,12 +387,15 @@ class _MimicCalibration(BaseEstimator, RegressorMixin):
             "The max of history index is {x}. \
             Please choose indexs between 0 and {x}"\
             .format(x=number_of_history-1)
+        result = []
         for i in show_history_array:
             one_history = data[i]
             score_array, nPosRate_array = self.get_one_history(one_history)
-            plt.plot(score_array, nPosRate_array, label=str(i))
-        plt.xlabel("pre calibrated prob", fontsize=18)
-        plt.ylabel("mimic calibrated prob", fontsize=18)
-        plt.legend()
-        fig.savefig('merging_bins_history.png')
-        plt.show()
+            result += [[score_array, nPosRate_array, i]]
+            # plt.plot(score_array, nPosRate_array, label=str(i))
+        # plt.xlabel("pre calibrated prob", fontsize=18)
+        # plt.ylabel("mimic calibrated prob", fontsize=18)
+        # plt.legend()
+        # fig.savefig('merging_bins_history.png')
+        # plt.show()
+        return result

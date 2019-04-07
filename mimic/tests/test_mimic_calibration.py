@@ -62,4 +62,4 @@ def test_mimic_history_plots():
     mimicObject.fit(y_calib_score, y_calib)
     y_mimic_score = mimicObject.predict(y_test_score)
     history = mimicObject.history_record_table
-    mimicObject.plot_history_result([0, 5, 19])
+    mimicObject.output_history_result([0, 5, 19])
