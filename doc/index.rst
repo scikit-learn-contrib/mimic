@@ -3,11 +3,12 @@
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-Welcome to sklearn-mimic calibration's documentation!
+Welcome to mimic calibration's documentation!
 ============================================
 
-This project is a reference implementation to anyone who wishes to develop
-scikit-learn compatible classes.
+This project is mimic calibration, one of calibration method for binary classification.
+This method was presented at NYC ML Meetup talk given by Sam Steingold.
+
 
 .. toctree::
    :maxdepth: 2
@@ -34,17 +35,17 @@ scikit-learn compatible classes.
 `Getting started <quick_start.html>`_
 -------------------------------------
 
-Information regarding this template and how to modify it for your own project.
+A quick start on how to use mimic calibration.
 
 `User Guide <user_guide.html>`_
 -------------------------------
 
-An example of narrative documentation.
+It provide detail information of mimic calibration. And describe the implementation.
 
 `API Documentation <api.html>`_
 -------------------------------
 
-An example of API documentation.
+API documentation of mimic calibration.
 
 `Examples <auto_examples/index.html>`_
 --------------------------------------
