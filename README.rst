@@ -2,14 +2,14 @@
 
 |Travis|_ |AppVeyor|_ |CircleCI|_ |ReadTheDocs|_ |Codecov|_
 
-.. |Travis| image:: https://travis-ci.org/pinjutien/mimic.svg?branch=master
-.. _Travis: https://travis-ci.org/pinjutien/mimic
+.. |Travis| image:: https://travis-ci.org/scikit-learn-contrib/mimic.svg?branch=master
+.. _Travis: https://travis-ci.org/scikit-learn-contrib/mimic
 
 .. |AppVeyor| image:: https://ci.appveyor.com/api/projects/status/45a01ej5biprj1pn?svg=true
 .. _AppVeyor: https://ci.appveyor.com/project/pinjutien/mimic
 
-.. |CircleCI| image:: https://circleci.com/gh/pinjutien/mimic.svg?style=shield&circle-token=:circle-token
-.. _CircleCI: https://circleci.com/gh/pinjutien/mimic/tree/master
+.. |CircleCI| image:: https://circleci.com/gh/scikit-learn-contrib/mimic.svg?style=shield&circle-token=:circle-token
+.. _CircleCI: https://circleci.com/gh/scikit-learn-contrib/mimic/tree/master
 
 .. |ReadTheDocs| image:: https://readthedocs.org/projects/sklearn-mimic/badge/?version=latest
 .. _ReadTheDocs: https://sklearn-mimic.readthedocs.io/en/latest/?badge=latest
