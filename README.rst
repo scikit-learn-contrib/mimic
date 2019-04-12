@@ -5,7 +5,7 @@
 .. |Travis| image:: https://travis-ci.org/scikit-learn-contrib/mimic.svg?branch=master
 .. _Travis: https://travis-ci.org/scikit-learn-contrib/mimic
 
-.. |AppVeyor| image:: https://ci.appveyor.com/api/projects/status/45a01ej5biprj1pn?svg=true
+.. |AppVeyor| image:: https://ci.appveyor.com/api/projects/status/l27hftp120wehpai?svg=true
 .. _AppVeyor: https://ci.appveyor.com/project/pinjutien/mimic
 
 .. |CircleCI| image:: https://circleci.com/gh/scikit-learn-contrib/mimic.svg?style=shield&circle-token=:circle-token
@@ -14,8 +14,8 @@
 .. |ReadTheDocs| image:: https://readthedocs.org/projects/sklearn-mimic/badge/?version=latest
 .. _ReadTheDocs: https://sklearn-mimic.readthedocs.io/en/latest/?badge=latest
 
-.. |Codecov| image:: https://codecov.io/gh/pinjutien/mimic/branches/master/graph/badge.svg
-.. _Codecov: https://codecov.io/gh/pinjutien/mimic/
+.. |Codecov| image:: https://codecov.io/gh/scikit-learn-contrib/mimic/branches/master/graph/badge.svg
+.. _Codecov: https://codecov.io/gh/scikit-learn-contrib/mimic/
 
 mimic calibration
 ==================================================
