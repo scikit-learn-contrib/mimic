@@ -67,7 +67,7 @@ def test_mimic_history_plots():
 def test_mimic_output():
     import pandas as pd
     tolerance = 1e-6
-    df = pd.read_csv("data_set.csv")
+    df = pd.read_csv("mimic/tests/data_set.csv")
     X = df["probability"].values
     y = df["y"].values
     y_mimic = df["mimic_probability"].values
