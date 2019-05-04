@@ -63,3 +63,17 @@ def test_mimic_history_plots():
     y_mimic_score = mimicObject.predict(y_test_score)
     history = mimicObject.history_record_table
     mimicObject.output_history_result([0, 5, 19])
+
+def test_mimic_output():
+    import pandas as pd
+    tolerance = 1e-6
+    df = pd.read_csv("data_set.csv")
+    X = df["probability"].values
+    y = df["y"].values
+    y_mimic = df["mimic_probability"].values
+    mimicObject = _MimicCalibration(threshold_pos=5, record_history=True)
+    mimicObject.fit(X, y)
+    pred = mimicObject.predict(X)
+    error = abs(y_mimic - pred)/y_mimic
+    pass_flag = (error < tolerance).all()
+    assert(pass_flag), "The numerical error is greater than {x}".format(x = tolerance)

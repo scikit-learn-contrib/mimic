@@ -2,6 +2,8 @@
 # Author: Pin-Ju Tien <pinju.tien@gmail.com>
 # ref: NYC ML Meetup talk given by Sam Steingold.
 # https://www.youtube.com/watch?v=Cg--SC76I1I
+# Acknowledgements: Special thanks to Ritesh Bansal for
+# the encouragment and support throughout the project.
 
 import numpy as np
 from sklearn.base import BaseEstimator, RegressorMixin
