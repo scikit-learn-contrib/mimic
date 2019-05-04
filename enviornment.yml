@@ -6,3 +6,4 @@ dependencies:
   - coverage
   - matplotlib
   - pytest
+  - pandas
