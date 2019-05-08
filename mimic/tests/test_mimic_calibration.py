@@ -4,6 +4,8 @@ from __future__ import print_function
 import numpy as np
 from sklearn.datasets import make_classification
 from sklearn.naive_bayes import MultinomialNB
+from sklearn.utils.testing import assert_raises
+from sklearn.exceptions import NotFittedError
 # import sys
 # sys.path.append('../')
 import unittest
@@ -57,8 +59,9 @@ def test_mimic_history_plots():
     # y_test_score: evaluation in the calibration model.
     y_test_score = clf.predict_proba(X_test)
     y_test_score = np.array([score[1] for score in y_test_score])
-    
+
     mimicObject = _MimicCalibration(threshold_pos=5, record_history=True)
+    assert_raises(NotFittedError, mimicObject.predict, y_test_score)
     mimicObject.fit(y_calib_score, y_calib)
     y_mimic_score = mimicObject.predict(y_test_score)
     history = mimicObject.history_record_table

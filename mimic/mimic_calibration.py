@@ -8,6 +8,7 @@
 import numpy as np
 from sklearn.base import BaseEstimator, RegressorMixin
 from sklearn.utils import indexable, column_or_1d
+from sklearn.utils.validation import check_is_fitted
 import sys
 
 
@@ -176,7 +177,7 @@ class _MimicCalibration(BaseEstimator, RegressorMixin):
 
     def run_merge_function(self, current_binning, record_history=False):
         """ It keep merging bins together until
-        the psoitive rate at each bin increasing.
+        the positive rate at each bin increasing.
 
         Parameters
         ----------
@@ -286,42 +287,6 @@ class _MimicCalibration(BaseEstimator, RegressorMixin):
             self.threshold_pos)
         return self
 
-    def predict_per_element(self, x, num_boundary):
-        # linear interpolation
-        which_bin = np.digitize([x], self.boundary_table, right=True)[0]
-        if ((which_bin == 0) or (which_bin == len(self.boundary_table)-1)):
-            y = self.calibrated_model[which_bin][6]
-        else:
-            if (which_bin >= num_boundary):
-                # outside bin boundary
-                delta_y = 1.0 - self.calibrated_model[num_boundary-1][6]
-                delta_x = x - self.boundary_table[num_boundary-1]
-                if (delta_x != 0):
-                    y = self.calibrated_model[num_boundary-1][6] + \
-                        (1.0*delta_y/delta_x) * \
-                        (x - self.boundary_table[num_boundary-1])
-                else:
-                    y = self.calibrated_model[num_boundary-1][6]
-            else:
-                # y-axis
-                y_right_boundary = self.calibrated_model[which_bin][6]
-                y_left_boundary = self.calibrated_model[which_bin-1][6]
-                # delta_y = self.calibrated_model[which_bin][6] - \
-                #    self.calibrated_model[which_bin-1][6]
-                delta_y = y_right_boundary - y_left_boundary
-                # x-axis
-                x_right_boundary = self.boundary_table[which_bin]
-                x_left_boundary = self.boundary_table[which_bin-1]
-                # delta_x = self.boundary_table[which_bin] - \
-                #     self.boundary_table[which_bin-1]
-                delta_x = x_right_boundary - x_left_boundary
-                # y = self.calibrated_model[which_bin-1][6] + \
-                #     (1.0*delta_y/delta_x) *
-                # (x - self.boundary_table[which_bin-1])
-                y = y_left_boundary + \
-                    (1.0*delta_y/delta_x) * (x - x_left_boundary)
-        return y
-
     def predict(self, pre_calib_prob):
         """ prediction function of mimic calibration.
         It returns 1-d array, calibrated probability using mimic calibration.
@@ -337,15 +302,25 @@ class _MimicCalibration(BaseEstimator, RegressorMixin):
             the mimic-calibrated probability.
         """
         pre_calib_prob = column_or_1d(pre_calib_prob)
-        if(self.calibrated_model is None):
-            sys.exit("Please calibrate model first by calling fit function.")
-        else:
-            calib_prob = []
-            num_boundary = len(self.boundary_table)
-            for x in pre_calib_prob:
-                y = self.predict_per_element(x, num_boundary)
-                calib_prob += [y]
-            calib_prob = np.array(calib_prob)
+        check_is_fitted(self, "calibrated_model")
+
+        boundary_table = [cali[3] for cali in self.calibrated_model]
+        x_start = np.array([0] + boundary_table)
+        x_end = np.array(boundary_table + [1])
+
+        calibration_table = [cali[6] for cali in self.calibrated_model]
+        y_start = np.array([calibration_table[0]] + calibration_table)
+        y_end = np.array(calibration_table + [calibration_table[-1]])
+
+        bin_idx = np.digitize(pre_calib_prob, boundary_table, right=True)
+        x_start = x_start[bin_idx]
+        x_end = x_end[bin_idx]
+        y_start = y_start[bin_idx]
+        y_end = y_end[bin_idx]
+
+        calib_prob = (pre_calib_prob - x_start) / (x_end - x_start) *\
+                     (y_end - y_start) + y_start
+
         return calib_prob
 
     def get_one_history(self, one_history):
