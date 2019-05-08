@@ -8,6 +8,7 @@
 import numpy as np
 from sklearn.base import BaseEstimator, RegressorMixin
 from sklearn.utils import indexable, column_or_1d
+from sklearn.utils.validation import check_is_fitted
 import sys
 
 
@@ -301,6 +302,7 @@ class _MimicCalibration(BaseEstimator, RegressorMixin):
             the mimic-calibrated probability.
         """
         pre_calib_prob = column_or_1d(pre_calib_prob)
+        check_is_fitted(self, "calibrated_model")
 
         boundary_table = [cali[3] for cali in self.calibrated_model]
         x_start = np.array([0] + boundary_table)
