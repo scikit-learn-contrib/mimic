@@ -43,6 +43,10 @@ Here is how it is implemented
    ``calibrated_model``: it records all the information of bin, such nPos rate, the avg/min/max probability.
 5. The final step is linear interpolation.
 
+Install:
+---------------
+  pip install -i https://test.pypi.org/simple/ mimiccalib==0.0.2
+   
 Parameters:
 ---------------
 >>> _MimicCalibration(threshold_pos, record_history)
