@@ -30,4 +30,6 @@ test_script:
   - pytest -v --cov=mimic --pyargs mimic
 
 after_test:
+  - cp .coverage %APPVEYOR_BUILD_FOLDER%
+  - cd %APPVEYOR_BUILD_FOLDER%
   - codecov
