@@ -15,8 +15,8 @@ matrix:
            SKLEARN_VERSION="0.20.3"
     - env: PYTHON_VERSION="3.7" NUMPY_VERSION="*" SCIPY_VERSION="*"
            SKLEARN_VERSION="*"
-    - env: PYTHON_VERSION="3.7" NUMPY_VERSION="*" SCIPY_VERSION="*"
-           SKLEARN_VERSION="nightly"
+    # - env: PYTHON_VERSION="3.7" NUMPY_VERSION="*" SCIPY_VERSION="*"
+    #       SKLEARN_VERSION="nightly"
 
 install:
   # install miniconda
