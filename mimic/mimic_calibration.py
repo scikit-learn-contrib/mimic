@@ -239,10 +239,13 @@ class _MimicCalibration(BaseEstimator, RegressorMixin):
         """
         assert ((y_score.min() >= 0) & (y_score.max() <= 1.0)), \
             "y_score is a probability which is between 0 and 1."
-        assert (len(np.unique(y_score)) > 2), \
-            "y_score should be at least 3 different probability."
+        # assert (len(np.unique(y_score)) > 2), \
+        #     "y_score should be at least 3 different probability."
         assert np.array_equal(np.unique(y_target), np.array([0, 1])), \
             "y_traget must be 0 and 1."
+        if (len(np.unique(y_score)) <= 2):
+            print("[WARNING]: the unique number of probabilities is\
+            less or equal than 2.".format(x=np.unique(y_score)))
         y_score = column_or_1d(y_score)
         y_target = column_or_1d(y_target)
         # sort y_score
