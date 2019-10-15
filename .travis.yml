@@ -31,12 +31,11 @@ install:
       else
           conda install --yes numpy==$NUMPY_VERSION scipy==$SCIPY_VERSION scikit-learn==$SKLEARN_VERSION cython nose pytest pytest-cov pandas
       fi
-  - pip install codecov
-  - pip install pytest pytest-cov  
+  - pip install codecov coverage
   - pip install .
 
 script:
   - pytest -v --cov=mimic --pyargs mimic
 
 after_success:
-  - codecov
+  - coverage xml && python-codacy-coverage -r coverage.xml
