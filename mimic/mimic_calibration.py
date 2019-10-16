@@ -245,7 +245,7 @@ class _MimicCalibration(BaseEstimator, RegressorMixin):
             "y_traget must be 0 and 1."
         if (len(np.unique(y_score)) <= 2):
             print("[WARNING]: the unique number of probabilities is\
-            less or equal than 2.".format(x=np.unique(y_score)))
+            less or equal than 2. {x}".format(x=np.unique(y_score)))
         y_score = column_or_1d(y_score)
         y_target = column_or_1d(y_target)
         # sort y_score
