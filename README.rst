@@ -45,7 +45,7 @@ Here is how it is implemented
 
 Install:
 ---------------
-  pip install -i https://test.pypi.org/simple/ mimiccalib==0.0.2
+  pip install -i https://test.pypi.org/simple/ mimiccalib
    
 Parameters:
 ---------------
