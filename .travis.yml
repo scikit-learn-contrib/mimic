@@ -31,7 +31,7 @@ install:
       else
           conda install --yes numpy==$NUMPY_VERSION scipy==$SCIPY_VERSION scikit-learn==$SKLEARN_VERSION cython nose pytest pytest-cov pandas
       fi
-  - pip install codecov coverage
+  - pip install codecov coverage codacy-coverage
   - pip install .
 
 script:
